@@ -1,0 +1,228 @@
+/* 第二階段：CSS 與 RWD */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Microsoft JhengHei", "PingFang TC", sans-serif;
+  line-height: 1.5;
+  color: #222;
+  background: #f2f4f7;
+}
+
+header {
+  padding: 20px 16px;
+  text-align: center;
+  color: #fff;
+  background: #2f5d8a;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.6rem;
+}
+
+main {
+  max-width: 600px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+
+/* 每個 section 是一張白色卡片，讓區塊清楚分開 */
+section {
+  margin-bottom: 16px;
+  padding: 16px;
+  background: #fff;
+  border: 1px solid #d8dde3;
+  border-radius: 8px;
+}
+
+/* ---------- 按鈕共用樣式 ---------- */
+button {
+  padding: 8px 16px;
+  font-size: 1rem;
+  font-family: inherit;
+  color: #fff;
+  background: #2f5d8a;
+  border: 1px solid #2f5d8a;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Checkpoint 2-3：hover / focus 效果 */
+button:hover {
+  background: #1f4263;
+  border-color: #1f4263;
+}
+
+button:focus-visible {
+  outline: 3px solid #f0a500;
+  outline-offset: 2px;
+}
+
+/* ---------- 新增任務 ---------- */
+#task-form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#task-input {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 10px;
+  font-size: 1rem;
+  font-family: inherit;
+  border: 1px solid #8a94a0;
+  border-radius: 6px;
+}
+
+#task-input:focus {
+  outline: none;
+  border-color: #2f5d8a;
+  box-shadow: 0 0 0 3px rgba(47, 93, 138, 0.3);
+}
+
+#message {
+  min-height: 1.5em;
+  margin: 8px 0 0;
+  color: #c0392b;
+}
+
+/* ---------- 篩選 ---------- */
+.filters {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-btn {
+  color: #2f5d8a;
+  background: #fff;
+}
+
+.filter-btn:hover {
+  color: #2f5d8a;
+  background: #e3ecf5;
+}
+
+.filter-btn.active {
+  color: #fff;
+  background: #2f5d8a;
+}
+
+/* ---------- 任務清單 ---------- */
+#task-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid #e3e7ec;
+}
+
+.task-item:last-child {
+  border-bottom: none;
+}
+
+.task-item label {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.task-item input[type="checkbox"] {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+}
+
+/* 任務名稱太長時自動換行，不要超出畫面 */
+.task-item span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.task-item.completed span {
+  color: #8a94a0;
+  text-decoration: line-through;
+}
+
+.delete-btn {
+  flex-shrink: 0;
+  padding: 6px 12px;
+  background: #c0392b;
+  border-color: #c0392b;
+}
+
+.delete-btn:hover {
+  background: #96281b;
+  border-color: #96281b;
+}
+
+.empty {
+  padding: 10px 0;
+  color: #8a94a0;
+  text-align: center;
+}
+
+/* ---------- 統計資訊 ---------- */
+.stats p {
+  margin: 0;
+  text-align: center;
+}
+
+.stats span {
+  font-weight: bold;
+  color: #2f5d8a;
+}
+
+/* ---------- RWD：480px 以下（手機） ---------- */
+@media (max-width: 480px) {
+  header h1 {
+    font-size: 1.3rem;
+  }
+
+  main {
+    margin: 12px auto;
+    padding: 0 10px;
+  }
+
+  section {
+    padding: 12px;
+  }
+
+  /* 表單改成直向排列，輸入框和按鈕都佔滿寬度 */
+  #task-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  #task-input {
+    flex: none;
+    width: 100%;
+  }
+
+  .filters {
+    flex-wrap: wrap;
+  }
+
+  .filters span {
+    width: 100%;
+  }
+
+  .filter-btn {
+    flex: 1;
+    padding: 8px 4px;
+  }
+}

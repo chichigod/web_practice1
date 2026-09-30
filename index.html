@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Task Manager</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>My Task Manager</h1>
+  </header>
+
+  <main>
+    <!-- 新增任務 -->
+    <!-- ★ 最重要的語意化區域：用 form 包住 label + input + button，
+         label 的 for 對應 input 的 id，點文字就能聚焦輸入框；
+         button type="submit" 讓滑鼠點擊和按 Enter 都能送出 -->
+    <section class="add-task">
+      <form id="task-form">
+        <label for="task-input">新增任務：</label>
+        <input type="text" id="task-input" placeholder="任務名稱">
+        <button type="submit">新增</button>
+      </form>
+      <p id="message"></p>
+    </section>
+
+    <!-- 篩選 -->
+    <section class="filters">
+      <span>篩選：</span>
+      <button type="button" class="filter-btn active" data-filter="all">全部</button>
+      <button type="button" class="filter-btn" data-filter="active">未完成</button>
+      <button type="button" class="filter-btn" data-filter="completed">已完成</button>
+    </section>
+
+    <!-- 任務清單：li 由 JavaScript 產生，結構如下
+      <li class="task-item">
+        <label>
+          <input type="checkbox">
+          <span>任務名稱</span>
+        </label>
+        <button type="button" class="delete-btn">刪除</button>
+      </li>
+    -->
+    <section class="task-section">
+      <ul id="task-list"></ul>
+    </section>
+
+    <!-- 統計資訊 -->
+    <section class="stats">
+      <p>
+        共 <span id="total-count">0</span> 項
+        未完成 <span id="active-count">0</span> 項
+        已完成 <span id="completed-count">0</span> 項
+      </p>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

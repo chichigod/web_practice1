@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Task Manager (Vue)</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Vue 還沒載入完成前先不要顯示 {{ }} */
+    [v-cloak] {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- 第五階段：用 Vue 重新實作「新增＋完成＋刪除」 -->
+  <div id="app" v-cloak>
+    <header>
+      <h1>My Task Manager（Vue 版）</h1>
+    </header>
+
+    <main>
+      <!-- 新增任務 -->
+      <section class="add-task">
+        <form id="task-form" @submit.prevent="addTask">
+          <label for="task-input">新增任務：</label>
+          <input type="text" id="task-input" v-model="newTask" placeholder="任務名稱">
+          <button type="submit">新增</button>
+        </form>
+        <p id="message">{{ message }}</p>
+      </section>
+
+      <!-- 任務清單 -->
+      <section class="task-section">
+        <ul id="task-list">
+          <li
+            v-for="task in tasks"
+            :key="task.id"
+            class="task-item"
+            :class="{ completed: task.completed }"
+          >
+            <label>
+              <input type="checkbox" v-model="task.completed">
+              <span>{{ task.text }}</span>
+            </label>
+            <button type="button" class="delete-btn" @click="deleteTask(task.id)">刪除</button>
+          </li>
+          <li v-if="tasks.length === 0" class="empty">目前沒有任務</li>
+        </ul>
+      </section>
+
+      <!-- 統計資訊 -->
+      <section class="stats">
+        <p>
+          共 <span>{{ tasks.length }}</span> 項
+          未完成 <span>{{ activeCount }}</span> 項
+          已完成 <span>{{ tasks.length - activeCount }}</span> 項
+        </p>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script>
+    const { createApp } = Vue;
+
+    createApp({
+      data() {
+        return {
+          newTask: '',   // 輸入框的內容（v-model 雙向綁定）
+          message: '',   // 提示訊息
+          tasks: [],     // 所有任務，每個任務是 { id, text, completed }
+          nextId: 1
+        };
+      },
+      computed: {
+        activeCount() {
+          return this.tasks.filter(function (t) {
+            return !t.completed;
+          }).length;
+        }
+      },
+      methods: {
+        // 新增任務：tasks 改變後，Vue 會自動更新畫面
+        addTask() {
+          const text = this.newTask.trim();
+
+          if (text === '') {
+            this.message = '請輸入任務名稱！';
+            return;
+          }
+
+          this.tasks.push({ id: this.nextId, text: text, completed: false });
+          this.nextId++;
+          this.newTask = '';
+          this.message = '';
+        },
+        // 刪除任務
+        deleteTask(id) {
+          this.tasks = this.tasks.filter(function (t) {
+            return t.id !== id;
+          });
+        }
+        // 完成／取消完成：checkbox 用 v-model 綁定 task.completed，不需要另外寫 method
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>
